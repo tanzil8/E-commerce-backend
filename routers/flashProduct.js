@@ -9,3 +9,4 @@ router.post("/", FlashProduct.single('img'), postFlashProduct);
 router.get("/",  getFlashProduct);
 
 export default router;
+

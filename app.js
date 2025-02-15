@@ -2,6 +2,9 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import flashProduct from './routers/flashProduct.js';
+import bestSeelingRouter from './routers/BestSeeling.js';
+import product from './routers/product.js';
+
 
 
 // Load environment variables from .env file
@@ -29,6 +32,9 @@ app.get('/', (req, res) => {
 
 
 app.use('/api/flash', flashProduct)
+app.use('/api/seeling', bestSeelingRouter);
+app.use('/api/product', product);
+
 
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
