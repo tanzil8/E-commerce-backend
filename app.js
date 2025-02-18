@@ -1,17 +1,12 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-import flashProduct from './routers/flashProduct.js';
-import bestSeelingRouter from './routers/BestSeeling.js';
-import product from './routers/product.js';
-
-
-
-// Load environment variables from .env file
-dotenv.config();
+import 'dotenv/config'; // Loads environment variables from a .env file
+import flashRoute from "./routers/flshroute.js"
+import bestSeelingRoute from "./routers/bestSeelingRoute.js"
+import productRoute from "./routers/productRoute.js"
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000; // Use port from environment or default to 3000
 
 // Middleware to parse JSON requests
 app.use(express.json());
@@ -25,17 +20,22 @@ mongoose.connect(process.env.MONGODB_URI)
     console.error('MongoDB connection error:', err);
   });
 
-// Define a simple route
+// Use the FlashRoute for any requests to /api/flashproducts
+app.use('/api/flashproducts', flashRoute);  // Mount the FlashRoute
+app.use('/api/bestseelingproduct', bestSeelingRoute);  // Mount the FlashRoute
+app.use('/api/product', productRoute);  // Mount the FlashRoute
+
+// Define a simple route for root
 app.get('/', (req, res) => {
   res.send('Hello, World!');
 });
 
+// Error handling for unsupported routes (optional)
+app.use((req, res) => {
+  res.status(404).send('Route not found!');
+});
 
-app.use('/api/flash', flashProduct)
-app.use('/api/seeling', bestSeelingRouter);
-app.use('/api/product', product);
-
-
+// Start server 
 app.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}`);
-  });
+  console.log(`Server is running at http://localhost:${port}`);
+});
