@@ -4,6 +4,7 @@ import 'dotenv/config'; // Loads environment variables from a .env file
 import flashRoute from "./routers/flshroute.js"
 import bestSeelingRoute from "./routers/bestSeelingRoute.js"
 import productRoute from "./routers/productRoute.js"
+import signupRouter from './routers/signupRoute.js'
 
 const app = express();
 const port = process.env.PORT || 3000; // Use port from environment or default to 3000
@@ -24,6 +25,7 @@ mongoose.connect(process.env.MONGODB_URI)
 app.use('/api/flashproducts', flashRoute);  // Mount the FlashRoute
 app.use('/api/bestseelingproduct', bestSeelingRoute);  // Mount the FlashRoute
 app.use('/api/product', productRoute);  // Mount the FlashRoute
+app.use('/api/signup', signupRouter);  // Mount the FlashRoute
 
 // Define a simple route for root
 app.get('/', (req, res) => {
